@@ -1,14 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 app.use(cors());
 
-// Servește fișiere statice (imagini, CSS etc.)
-app.use("/images", express.static(path.join(__dirname, "../frontend/public/images")));
-
-// Lista proiectelor
 const projects = [
     {
         title: "Debitare scaune fibră de sticlă cu robot ABB",
@@ -42,28 +37,28 @@ const projects = [
         title: "Paletizare și depaletizare baterii",
         description: "Sistem KUKA cu senzori de scanare pentru baterii.",
         longDescription:
-            "Un proiect avansat cu roboți KUKA, unde am implementat paletizare pe categorii și depaletizare rapidă de baterii. Sistemul folosea senzori de scanare simultană a mai multor laturi, pentru recunoaștere automată și sortare pe categorii.",
+            "Un proiect avansat cu roboți KUKA, unde am implementat paletizare pe cateogrii și depaletizare rapidă de baterii. Sistemul folosea senzori de scanare simultană a mai multor laturi, pentru recunoaștere automată și sortare pe categorii.",
         image: "/images/proiect5.jpg",
     },
     {
-        title: "Automatizare grupare pachete de plăci",
-        description: "Sistem Mitsubishi PLC și servo pentru grupare pachete de plăci.",
+        title: "Automatizare grupare pachete de placi",
+        description: "Sistem Mitsubishi PLC și servo pentru grupare pachete de placi.",
         longDescription:
             "Automatizare completă pentru gruparea pachetelor de plăci, folosind PLC și servodrivere Mitsubishi. Soluția a permis sincronizare precisă, reducerea timpilor de ciclu și creșterea productivității liniei.",
         image: "/images/proiect6.jpg",
     },
     {
         title: "Celule robotizate KUKA KRC1",
-        description: "Integrarea roboților KUKA KRC4 și KRC5 folosind programe KRC1.",
+        description: "Integrarea roboților KUKA KRC4 si 5 folosind vechile programe de a robot KRC1.",
         longDescription:
-            "Am implementat celule robotizate folosind roboți KUKA KRC4 și KRC5, adaptând programele vechi KRC1 pentru optimizarea proceselor de producție în fabrici existente.",
+            "Am implementat celule robotizate folosind roboți KUKA KRC4 si 5 adaptand vechile programe de KRC1, optimizând procese de producție în fabrici existente.",
         image: "/images/proiect7.jpg",
     },
     {
         title: "Sistem vision pentru măsurare bandă",
         description: "Keyence vision + Siemens PLC pentru măsurare lățime bandă.",
         longDescription:
-            "Un sistem de măsurare continuă a lățimii benzii expandate, realizat cu sistem vision Keyence și control PLC Siemens. Soluția a permis monitorizare în timp real și ajustare automată a procesului.",
+            "Un sistem de măsurare continuă a lățimii benzii expandate, realizat cu sistem vision Keyence și control cu PLC Siemens. Soluția a permis monitorizare în timp real și ajustare automată a procesului.",
         image: "/images/proiect8.jpg",
     },
     {
@@ -75,13 +70,15 @@ const projects = [
     },
 ];
 
-// Endpoint principal
+// Endpoint pentru testare backend
+app.get("/", (req, res) => {
+    res.send("✅ Backendul Consult Robotics rulează corect!");
+});
+
+// Endpoint principal de proiecte
 app.get("/projects", (req, res) => {
     res.json(projects);
 });
 
-// Pornire server
-const PORT = 5000;
-app.listen(PORT, () =>
-    console.log(`✅ Backend running on http://localhost:${PORT}`)
-);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));
