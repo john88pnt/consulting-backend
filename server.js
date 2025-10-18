@@ -48,7 +48,7 @@ const projects = [
         image: "/images/proiect6.jpg",
     },
     {
-        title: "Celule robotizate KUKA KRC1",
+        title: "Celule robotizate KUKA",
         description: "Integrarea roboților KUKA KRC4 si 5 folosind vechile programe de a robot KRC1.",
         longDescription:
             "Am implementat celule robotizate folosind roboți KUKA KRC4 si 5 adaptand vechile programe de KRC1, optimizând procese de producție în fabrici existente.",
