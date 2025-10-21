@@ -1,84 +1,100 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
+// Servim fișierele statice (imaginile din /public/images)
+app.use("/images", express.static(path.join(__dirname, "public", "images")));
+
+// === Proiectele ===
 const projects = [
     {
+        id: 1,
         title: "Debitare scaune fibră de sticlă cu robot ABB",
         description: "Celulă robotizată pentru debitarea scaunelor din fibră de sticlă.",
         longDescription:
-            "Acest proiect a presupus integrarea unui robot ABB într-o celulă robotizată de debitare a scaunelor din fibră de sticlă. Procesul a fost optimizat pentru precizie ridicată și viteză, reducând erorile de tăiere și îmbunătățind siguranța operatorilor.",
+            "Integrare robot ABB pentru debitare precisă de scaune din fibră de sticlă. Proces optimizat pentru viteză și precizie ridicată.",
         image: "/images/proiect1.jpg",
     },
     {
+        id: 2,
         title: "Vopsire cu gelcoat a matrițelor",
-        description: "Robot ABB pentru aplicarea de gelcoat pe matrițe.",
+        description: "Robot ABB pentru aplicarea uniformă de gelcoat.",
         longDescription:
-            "Am implementat o celulă robotizată cu robot ABB pentru aplicarea uniformă a gelcoat-ului pe matrițele din fibră de sticlă. Sistemul a permis reducerea pierderilor de material, calitate superioară a finisajului și repetabilitate ridicată.",
+            "Celulă ABB pentru aplicare controlată de gelcoat pe matrițe din fibră de sticlă. Calitate superioară și pierderi reduse de material.",
         image: "/images/proiect2.jpg",
     },
     {
+        id: 3,
         title: "Frezare modele mari cu ABB",
         description: "Robot ABB pentru frezarea matrițelor de până la 5m.",
         longDescription:
-            "Proiect complex de frezare a matrițelor mari (până la 5 metri) pentru rezervoare de utilaje agricole. Am configurat robotul ABB să execute operații de frezare de mare precizie pe piese de dimensiuni industriale, eliminând necesitatea unor centre de prelucrare foarte costisitoare.",
+            "Frezare de mare precizie pentru matrițe de rezervoare agricole, cu robot ABB și traiectorii generate automat.",
         image: "/images/proiect3.jpg",
     },
     {
+        id: 4,
         title: "Paletizare flexibilă cu KUKA",
-        description: "Celulă de paletizare cu înălțime variabilă a paletului.",
+        description: "Celulă de paletizare cu înălțime variabilă.",
         longDescription:
-            "Am realizat o celulă robotizată cu roboți KUKA pentru paletizare flexibilă, unde înălțimea paletului putea fi variată în funcție de tipul produsului. Soluția a dus la creșterea eficienței și adaptabilitate la mai multe tipuri de ambalaje.",
+            "Soluție KUKA configurabilă pentru paletizare automată, adaptabilă la tipul produsului și înălțimea paletului.",
         image: "/images/proiect4.jpg",
     },
     {
+        id: 5,
         title: "Paletizare și depaletizare baterii",
         description: "Sistem KUKA cu senzori de scanare pentru baterii.",
         longDescription:
-            "Un proiect avansat cu roboți KUKA, unde am implementat paletizare pe cateogrii și depaletizare rapidă de baterii. Sistemul folosea senzori de scanare simultană a mai multor laturi, pentru recunoaștere automată și sortare pe categorii.",
+            "Proiect cu recunoaștere automată a bateriilor prin senzori și algoritmi de clasificare, folosind roboți KUKA.",
         image: "/images/proiect5.jpg",
     },
     {
-        title: "Automatizare grupare pachete de placi",
-        description: "Sistem Mitsubishi PLC și servo pentru grupare pachete de placi.",
+        id: 6,
+        title: "Automatizare grupare pachete de plăci",
+        description: "Sistem Mitsubishi PLC și servo pentru grupare.",
         longDescription:
-            "Automatizare completă pentru gruparea pachetelor de plăci, folosind PLC și servodrivere Mitsubishi. Soluția a permis sincronizare precisă, reducerea timpilor de ciclu și creșterea productivității liniei.",
+            "Automatizare sincronizată cu Mitsubishi PLC și servo, pentru manipularea precisă a pachetelor de plăci industriale.",
         image: "/images/proiect6.jpg",
     },
     {
-        title: "Celule robotizate KUKA",
-        description: "Integrarea roboților KUKA KRC4 si 5 folosind vechile programe de a robot KRC1.",
+        id: 7,
+        title: "Celule robotizate KUKA KRC1",
+        description: "Integrare roboți KUKA KRC4/KRC5 cu programe vechi.",
         longDescription:
-            "Am implementat celule robotizate folosind roboți KUKA KRC4 si 5 adaptand vechile programe de KRC1, optimizând procese de producție în fabrici existente.",
+            "Adaptare programe KRC1 pentru control modern KRC4/5, optimizând procese în fabrici existente.",
         image: "/images/proiect7.jpg",
     },
     {
+        id: 8,
         title: "Sistem vision pentru măsurare bandă",
         description: "Keyence vision + Siemens PLC pentru măsurare lățime bandă.",
         longDescription:
-            "Un sistem de măsurare continuă a lățimii benzii expandate, realizat cu sistem vision Keyence și control cu PLC Siemens. Soluția a permis monitorizare în timp real și ajustare automată a procesului.",
+            "Monitorizare automată a benzii expandate cu Keyence Vision și control Siemens PLC.",
         image: "/images/proiect8.jpg",
     },
     {
+        id: 9,
         title: "Sortare cu robot ABB și deep learning",
         description: "Sortare plastic și metal cu deep learning.",
         longDescription:
-            "Proiect inovativ de sortare folosind un robot ABB integrat cu un model de deep learning antrenat pentru recunoașterea plasticului și metalului. Sistemul permite sortarea automată pe baza imaginilor video, crescând viteza și acuratețea procesului.",
+            "Proiect inovativ ABB + YOLOv8 pentru recunoașterea și sortarea obiectelor din plastic și metal în timp real.",
         image: "/images/proiect9.jpg",
     },
 ];
 
-// Endpoint pentru testare backend
-app.get("/", (req, res) => {
-    res.send("✅ Backendul Consult Robotics rulează corect!");
-});
-
-// Endpoint principal de proiecte
-app.get("/projects", (req, res) => {
+// Endpoint principal pentru proiecte
+app.get("/api/projects", (req, res) => {
     res.json(projects);
 });
 
+// Endpoint de test simplu
+app.get("/", (req, res) => {
+    res.send("✅ Backend Consult Robotics funcționează corect!");
+});
+
+// Pornire server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));
